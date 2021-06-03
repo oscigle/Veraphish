@@ -1,0 +1,59 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+  
+    <h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>Group Details</h2>
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the Group details</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+	
+	{% elif group %}
+
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-id-card-o"></i> Group ID: {{ group.id }}</li> 
+		<li class="pure-menu-item"><i class="fa fa-tags"></i> Name: {{ group.name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-user-times"></i> Targets: {{ group.targets|length }} user/s</li>
+		</ul>
+		<br>
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+			<tr>
+				<th>First Name</th>
+				<th>Last name</th>
+				<th>Email</th>
+				<th>Position</th>
+				
+			</tr>
+			</thead>
+			<tbody>
+			{% for user in group.targets %}
+				<tr>
+					<th>{{ user.first_name }}</th>
+					<th>{{ user.last_name }}</th>
+					<th>{{ user.email }}</th>
+					<th>{{ user.position }}</th>
+				</tr>
+			{% endfor %}	
+			</tbody>
+		</table>
+		
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No details found</p>
+	
+	{% endif%}
+
+	<p><a class="pure-button button-orange" href="{% url 'list_groups' %}"><i class="fa fa-backward fa-lg"></i> Go back to group list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+	
+  </body>
+</html>

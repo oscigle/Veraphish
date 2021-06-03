@@ -1,0 +1,35 @@
+{% load static %}
+
+{% include "SETA_gophish/base.html" %}
+
+<div class="main">	
+<h1><img src="{% static "logo.png" %}" alt="SETAphish"></h1>
+<h2>About</h2>
+
+<p><strong>VeraPish</strong> is a web app developed by <a href="mailto:osc.iglesias@gmail.com">Óscar Iglesias</a> 
+in the context of an Universitary Information Security Master of Science End of Degree project 
+at <a href="https://www.unir.net/">UNIR</a> in Spain.</p>
+
+<p>Based on <a href="https://www.djangoproject.com/">Django framework</a> and leveraging on python 
+<a href="https://docs.getgophish.com/python-api-client/">Gophish API</a>, it is designed to be a 
+<strong>SETA (Security Education Training Tool) for improving Engineering Social Attacks awareness, 
+focusing on Phishing campaigns</strong>.</p>
+
+<p>The application has two main components:</p>
+
+<li><a href="{% url 'index' %}">Phishing Module</a>. Will allow to handle through GoPhish API all phishing campaigns end-to-end. 
+From creating a target group of users, to define emails, templates and landing pages, 
+SMTP profiles, and more.</li>
+<br>
+<li><a href="{% url 'SETA_surveys:index2' %}">Training Module</a>. Assess the theoretical social engineering awareness of employees through 
+dead easy to configure training surveys, getting a couple of customizable global scores of 
+effectiveness on the way.</li>
+
+<br>
+Check <a href="{% url 'show_help' %}">Help</a> section for further configuration details.
+
+
+</div>
+{% include "SETA_gophish/footer.html" %}
+</body>
+</html>

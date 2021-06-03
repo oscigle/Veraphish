@@ -1,0 +1,62 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>SMTP profile creation</h2>
+	
+	{% if form %}
+	
+		{% if form.errors %}
+		{% for field in form %}
+			{% for error in field.errors %}
+				<div class="alert alert-danger">
+					<strong>{{ error|escape }}</strong>
+				</div>
+			{% endfor %}
+		{% endfor %}
+		{% for error in form.non_field_errors %}
+			<div class="alert alert-danger">
+				<strong>{{ error|escape }}</strong>
+			</div>
+		{% endfor %}
+
+		{% else %}
+		
+		
+		<p><i class="fa fa-info-circle fa-lg"></i> For creating a new SMTP profile use the form. Refer to Gophish documentation if needed</p>
+		<br>
+		
+		<form class="pure-form pure-form-stacked" action={% url 'create_profile' %} method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<fieldset>
+		{{form}}
+		<input class="pure-button pure-button-primary" type="submit" value="OK">
+		</fieldset>
+		</form>
+	
+		{% endif %}
+	
+	{% elif error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to create the SMTP profile</p>
+		<p>Reason for that: {{ error_msg }}</p>
+		<p><a class="pure-button button-orange" href="{% url 'create_profile' %}"><i class="fa fa-backward fa-lg"></i> Go back to SMTP profile creation</a></p>
+	
+	{% elif profile %}
+	
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> SMTP profile {{profile.name}} created successfully!</p>
+		<p><a class="pure-button button-orange" href="{% url 'create_profile' %}"><i class="fa fa-backward fa-lg"></i> Go back to SMTP profile creation</a></p>
+	
+	{% endif %}
+	
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+
+	{% include "SETA_gophish/footer.html" %}
+
+  </body>
+</html>

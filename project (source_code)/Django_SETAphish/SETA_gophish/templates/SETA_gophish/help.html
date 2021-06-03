@@ -1,0 +1,73 @@
+{% load static %}
+
+{% include "SETA_gophish/base.html" %}
+
+<div class="main">	
+<h1><img src="{% static "logo.png" %}" alt="SETAphish"></h1>
+<h2>Help</h2>
+
+<p>In order to set up all to have everything up and running in a test environment, this is the checklist to follow. 
+The deployment in production is out of scope of the following instructions.</p>
+
+<li>1. Install <a href="https://docs.getgophish.com/user-guide/installation">Gophish</a> as per instructions in the website.</li>
+<br>
+<li>2. Set up the config.json file for Gophish as per your needs checking the information in the link above. Example of 
+file in folder docs in the project_root package.</li>
+<br>
+<li>3. Once Gophish is up and running, open the URL in your browser and change the API key 
+as indicated <a href="https://docs.getgophish.com/user-guide/documentation/changing-user-settings">here</a>.
+You will not need to get access to GoPhish directly anymore, but copy the key since you will use it for VeraPhish configuration.</li>
+<br>
+<li>4. Install <a href="https://www.python.org/downloads/">python</a> in case you do not have it yet.</li>
+<br>
+<li>5. Install the GoPhish API for python as per instructions in <a href="https://docs.getgophish.com/python-api-client/">here</a>.</li>
+<br>
+<li>6. Install the <a href="https://docs.djangoproject.com/en/3.1/topics/install/">Django framework</a>.</li>
+<br>
+<li>7. Place VeraPhish files package in a place reachable for your Python and Django installation.</li>
+<br>
+<li>9. Configure cfg files for both apps (phishing and surveys), in the /modules/config/ folder 
+(SETAphish.cfg and SETAsurvey.csg respectively). There are examples for everything 
+in /docs within the project_root package, and you will have to use the Gophish API 
+key you wrote down in #3 so that all match.</li>
+<br>
+<li>10. All views in the app are only for admins (login required), except: main page 
+which is dynamic, static views (help, about, license, contact), and the make survey link 
+(so that users can be trained without logging in). Hence, you will need to create 
+a superuser before starting to use the app (executing "python manage.py createsuperuser")
+in the main directory of the app. Alternatively, you could uncomment the Register link in 
+the login view, but it is not very recommendable since anyone could create their own users 
+while answering surveys.</li>
+<br>
+<li>11. Execute python manage.py runserver from a terminal in the main app directory, and you
+ are good to go with some testing (this tutorial is not intended to show how to set up a 
+production environment/server. You will have to take care of SSL certificates, 
+spam filtering when sending phishing emails..., etc).</li>
+<br>
+<li>12. Logical testing steps would be: within the Pishing section of the web app, create at least 
+an user group, an email template page, a landing page, an SMTP profile and a phishing campaign. 
+Later you can go to the Survey section and create a survey template, and a training survey 
+based on the phishing campaign created earlier, or on the target group itself (first option will 
+leverage on phishing results to build the A-score indicator, which will not be available otherwise). 
+Example files where needed are in folder /docs within the project_root package, but I think using 
+the webapp is quite self-explanatory.</li>
+<br>
+
+<li>13. Database handling: all Gophish objects (user groups, email and landing page templates, 
+SMTP profiles and phishing campaigns), are stored within Gophish database, whereas Survey templates, 
+Trainings launched and related User answer objects are within Django database. Even though 
+all actions can be performed from the app itself, django database objects can be manipulated 
+directly from the admin panel, which can be useful for testing 
+(e.g. in "http://127.0.0.1:8000/admin/" if you ran the server with "python manage.py runserver").</li>
+<br>
+
+<p>That should be all. <a href="{% url 'show_contact' %}">Let me know</a> if anything is unclear or I am missing 
+something. Perhaps is worth mentioning I made all the development and testing in a 
+windows 10 workstation.</p>
+
+<p>Óscar</p> 
+
+</div>
+{% include "SETA_gophish/footer.html" %}
+</body>
+</html>

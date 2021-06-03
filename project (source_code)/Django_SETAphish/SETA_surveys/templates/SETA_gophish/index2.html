@@ -1,0 +1,53 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+    <h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAsurveys</h1>
+	
+	{% if request.user.is_authenticated %}
+	
+		<p>Please, choose any option among the available ones:</p>
+
+		<h2>Surveys</h2>
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:create_survey' %}"><i class="fa fa-pencil-square-o fa-lg"></i> Survey creation</a> Create new customized survey templates for your training campaigns.</p>
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:list_surveys' %}"><i class="fa fa-info-circle fa-lg"></i> Survey info</a> Show high/low level details of already created surveys and remove them if needed.</p>
+		
+		<br>
+		
+		<h2>Training campaigns</h2>
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:create_training' %}"><i class="fa fa-newspaper-o fa-lg"></i> Training campaign creation</a> Create new customized training campaigns.</p>
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:list_trainings' %}"><i class="fa fa-info-circle fa-lg"></i> Training campaign info</a> Show high/low level details of already created campaigns and remove them if needed.</p>
+		
+		<br>
+		
+	{% else %}
+	  
+		<div class="pure-g">
+		<div class="pure-u-1-3">
+		<div class="l-box">
+		<h2><i class="fa fa-envelope-open fa-lg"></i> Phishing</h2>
+		<p>You will be able to handle through GoPhish API all your phishing campaigns end-to-end. 
+		From creating a target group of users, to define emails, templates and landing pages, SMTP profiles, and the whole campaigns.</p>
+		</div>
+		</div>
+		<div class="pure-u-1-3">
+		<div class="l-box">
+		<h2><i class="fa fa-comment fa-lg"></i> Surveys</h2>
+		<p>This feature will allow to assess the theoretical social engineering awareness of employees through very easy to configure training surveys, 
+		getting a customized global score of effectiveness.</p>
+		</div>
+		</div>
+		</div>
+		
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> You must log in to be able to use SETAphish!</p>
+		
+	{% endif %}
+	    
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+	
+  </body>
+</html>

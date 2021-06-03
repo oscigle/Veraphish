@@ -1,0 +1,53 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAsurvey</h1>
+	<h2>Survey creation</h2>
+	
+	{% if form %}
+	
+		<p><i class="fa fa-info-circle fa-lg"></i> For creating a new survey: use CSV file (',' separated and no headers), containing per line: Q,question, or T/F,answer.</p>
+		<br>
+		
+		
+		<form class="pure-form pure-form-stacked" action={% url 'SETA_surveys:create_survey' %} method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<fieldset>
+		<label for="survey_name">Survey name</label>
+		<input id="survey_name" type="text" name="survey_name" value="">
+		<br>
+		<label for="your_file">Select your CSV file</label>
+		<input id="your_file" type="file" name="your_file" value="your_file">
+		<br>
+		<input class="pure-button pure-button-primary" type="submit" value="OK">
+		</fieldset>
+		</form>
+		
+	{% elif error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to create the survey</p>
+		<p>Reason for that: {{ error_msg }}</p>
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:create_survey' %}"><i class="fa fa-backward fa-lg"></i> Go back to survey creation</a></p>
+	
+	{% elif questions %}
+	
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Survey {{survey_name}} created successfully!</p>
+		
+		<p>Total number of questions loaded: {{ questions}}</p>
+		
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:create_survey' %}"><i class="fa fa-backward fa-lg"></i> Go back to survey creation</a></p>
+		
+		
+	{% endif %}
+	
+	<p><a class="pure-button button-blue" href="{% url 'SETA_surveys:index2' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+
+	{% include "SETA_gophish/footer.html" %}
+
+  </body>
+</html>

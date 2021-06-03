@@ -1,0 +1,42 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+  
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>Email template details</h2>	
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the email template details</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+	
+	{% elif template %}
+
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-id-card-o"></i> Template ID: {{ template.id }}</li> 
+		<li class="pure-menu-item"><i class="fa fa-tags"></i> Name: {{ template.name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-comments"></i> Subject: {{ template.subject }}</li>
+		
+		{% if template.html != '' %}
+			<li class="pure-menu-item" ><i class="fa fa-sticky-note"></i> HTML: <br/><br/> {{ template.html }} <br/><br/></li>
+		{% endif %}
+				
+		</ul>
+		
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No details found</p>
+	
+	{% endif %}
+
+	<p><a class="pure-button button-orange" href="{% url 'list_templates' %}"><i class="fa fa-backward fa-lg"></i> Go back to templates list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+	
+  </body>
+</html>

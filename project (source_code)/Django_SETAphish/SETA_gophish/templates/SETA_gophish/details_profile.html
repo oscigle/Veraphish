@@ -1,0 +1,41 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+  
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>SMTP profile details</h2>	
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the SMTP profile details</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+	
+	{% elif profile %}
+
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-id-card-o"></i> Profile ID: {{ profile.id }}</li> 
+		<li class="pure-menu-item"><i class="fa fa-tags"></i> Name: {{ profile.name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-server"></i> Host: {{ profile.host }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-address-card-o"></i> From address: {{ profile.from_address }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-user"></i> Username: {{ profile.username }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-unlock"></i> Password: {{ profile.password }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-exclamation"></i> Ignore certificate errors: {{ profile.ignore_cert_errors }}</li>		
+		</ul>
+		
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No details found</p>
+	
+	{% endif %}
+
+	<p><a class="pure-button button-orange" href="{% url 'list_profiles' %}"><i class="fa fa-backward fa-lg"></i> Go back to SMTP profiles list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+	
+  </body>
+</html>

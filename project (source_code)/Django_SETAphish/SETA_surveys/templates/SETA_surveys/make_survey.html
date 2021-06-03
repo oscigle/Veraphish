@@ -1,0 +1,82 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAsurveys</h1>
+	
+	<h2>Training Survey</h2>
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the Survey!</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+		<p><a class="pure-button button-orange" href="{% url 'index' %}"><i class="fa fa-backward fa-lg"></i> Go back to main page</a></p>
+	
+	{% elif score %}
+	
+		<p><i class="fa fa-check-circle fa-lg"></i> Thanks for completing the training survey!</p>
+		
+		{% if score >= 50 %}
+			<h2 class='success'><i class="fa fa-check-square fa-lg"></i> Congrats! Your final score is: {{score}} over 100!</h2>
+		{% else %}
+			<h2 class='warning'><i class="fa fa-fa-times fa-lg"></i> Sorry! Your final score is: {{score}} over 100!</h2>
+		{% endif %}
+		
+		<h3>Please, verify the right answers</h3>
+		
+		{% for question in questions %}
+			<h3 class="oblique">{{question.text}}</h3>
+			{% for answer in answers %}
+				{% if answer.question.id == question.id %}
+					{% if answer.valid %}
+							<p><i class="fa fa-check-square"></i> {{answer.text}}</p>						
+					{% else %}
+							<p><i class="fa fa-times"></i> {{answer.text}}</p>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+		
+		<br>
+		
+		
+		
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:index2' %}"><i class="fa fa-backward fa-lg"></i> Go back to main page</a></p>
+		
+	
+	{% elif survey %}
+
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Please conduct the following security awareness training survey and click submit. Warning: only one attempt allowed.</p>
+		
+		<h2>Questions</h2>
+		<form class="pure-form pure-form-stacked" action={% url 'SETA_surveys:make_survey' slug %} method="post">
+		{% csrf_token %}
+		<fieldset>
+			{% for question in questions %}				
+				<label for="question">{{question.text}}</label>
+				{% for answer in answers %}
+					{% if answer.question.id == question.id %}
+						<p><input type="checkbox" name="answer{{forloop.counter0}}"/> {{ answer.text }}</p>	
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+			<br>
+		<input class="pure-button pure-button-primary" type="submit" value="Submit">
+		</fieldset>
+		</form>
+		
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:index2' %}"><i class="fa fa-backward fa-lg"></i> Go back to main page</a></p>
+	
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No info found!</p>
+	
+	{% endif%}
+		
+	
+	{% include "SETA_gophish/footer.html" %}
+		
+  </body>
+</html>

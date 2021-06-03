@@ -1,0 +1,25 @@
+Q,Question 1
+T,"Answer 1, true"
+F,"Answer 2, false"
+F,"Answer 3, false"
+Q,Question 2
+T,"Answer 4, true"
+F,"Answer 5, false"
+Q,Question 3
+T,"Answer 6, true"
+T,"Answer 7, true"
+Q,Question 4
+T,"Answer 8, true"
+F,"Answer 9, false"
+F,"Answer 10, false"
+Q,Question 5
+T,"Answer 11, true"
+F,"Answer 12, false"
+F,"Answer 13, false"
+Q,Question 6
+T,"Answer 14, true"
+F,"Answer 15, false"
+T,"Answer 16, true"
+Q,Question 7
+T,"Answer 17, true"
+T,"Answer 18, true"

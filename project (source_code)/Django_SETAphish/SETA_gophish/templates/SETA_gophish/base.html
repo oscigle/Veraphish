@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SETAphish</title>
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" 
+	integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
+	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static "style.css" %}">
+  </head>
+  <body>
+
+	<div class="navbar">
+	  {% if request.user.is_authenticated %}
+	  <a href="{% url 'user_logout' %}"><i class="fa fa-user"></i> {{ user.get_username }}</a>
+	  {% else %}
+	  <a href="{% url 'user_login' %}"> <i class="fa fa-user-o"></i> Login</a>
+	  {% endif %}
+	  <a href="{% url 'SETA_surveys:index2' %}">Surveys</a>
+	  <a href="{% url 'index' %}">Phishing</a>
+	  <a href="{% url 'show_help' %}">Help</a>
+	</div>

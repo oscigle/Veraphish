@@ -1,0 +1,119 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+  
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>Campaign details</h2>	
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the campaign details</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+	
+	{% elif summary %}
+
+		<h3>General information</h3>
+
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-dot-circle-o"></i> Campaign ID: {{ summary.id }}</li> 
+		<li class="pure-menu-item"><i class="fa fa-tags"></i> Name: {{ summary.name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-calendar"></i> Created date: {{ summary.created_date }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-calendar-check-o"></i> Launch date: {{ summary.launch_date }}</li>
+		
+		{% if summary.status == 'Completed' %}
+			<li class="pure-menu-item"><i class="fa fa-check-circle"></i> Status date: {{ summary.status|upper }}</li>
+		{% elif summary.status == 'In progress' %}
+			<li class="pure-menu-item"><i class="fa fa-spinner"></i> Status date: {{ summary.status|upper }}</li>
+		{% else %}
+			<li class="pure-menu-item"><i class="fa fa-bed"></i> Status date: {{ summary.status|upper }}</li>
+		{% endif %}
+		</ul>
+		
+		<h3>Campaign components</h3>
+		
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-envelope-o"></i> Phishing email template: {{ details.template.name }}</li> 
+		<li class="pure-menu-item"><i class="fa fa-paper-plane-o"></i> Landing page: {{ details.page.name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-cogs"></i> SMTP profile used: {{ details.smtp.name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-map-marker"></i> Phishing URL: {{ details.url }}</li>
+		</ul>
+		
+		<h3>Main Phishing Statistics</h3>
+		
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-envelope-o"></i> {{ summary.stats.total }} totals</li> 
+		<li class="pure-menu-item"><i class="fa fa-envelope"></i> {{ summary.stats.sent }} sent</li>
+		<li class="pure-menu-item"><i class="fa fa-envelope-open-o"></i> {{ summary.stats.opened }} opened</li>
+		<li class="pure-menu-item"><i class="fa fa-crosshairs"></i> {{ summary.stats.clicked }} clicked</li>
+		<li class="pure-menu-item"><i class="fa fa-paper-plane-o"></i> {{ summary.stats.submitted_data }} data submitted</li>
+		<li class="pure-menu-item"><i class="fa fa-exclamation-triangle"></i> {{ summary.stats.error }} errors</li>
+		</ul>
+		
+		<h3>User statistics</h3>
+		
+		{% if details.results %}
+		
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+			<tr>
+				<th>User ID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Position</th>
+				<th>Status</th>
+				
+			</tr>
+			</thead>
+		
+			<tbody>
+			{% for result in details.results %}
+				<tr>
+					<th>{{ result.id }}</th> 
+					<th>{{ result.first_name }}</th>
+					<th>{{ result.last_name }}</th>
+					<th>{{ result.email }}</th>
+					<th>{{ result.position }}</th>
+					<th>{{ result.status|upper }}</th>
+				</tr>
+			{% endfor %}	
+			</tbody>
+		</table>
+		
+		{% endif %}
+	
+		<h3>Downloads</h3>
+					
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+			<tr>
+				<th>General Stats</th>
+				<th>User stats</th>
+			</tr>
+			</thead>
+		
+			<tbody>
+			<tr>
+				<th><a class="pure-button button-maroon" href="{% url 'download_campaign_stats' summary.id %}"><i class="fa fa-download fa-lg"></i></a></th>
+				<th><a class="pure-button button-maroon" href="{% url 'download_campaign_users' summary.id %}"><i class="fa fa-cloud-download fa-lg"></i></a></th>
+			</tr>
+			</tbody>
+		</table>
+	
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No details found</p>
+	
+	{% endif %}
+
+	<p><a class="pure-button button-orange" href="{% url 'list_campaigns' %}"><i class="fa fa-backward fa-lg"></i> Go back to campaigns list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+	
+  </body>
+</html>

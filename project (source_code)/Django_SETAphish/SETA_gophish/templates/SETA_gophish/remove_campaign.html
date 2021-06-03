@@ -1,0 +1,29 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">
+
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>Campaign removal</h2>
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to remove the campaign</p>
+		<p>Reason for that: {{ error_msg }}</p>
+		
+	{% elif summary %}
+	
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Campaign {{summary.name}} removed successfully!</p>
+	
+	{% endif %}
+	
+	<p><a class="pure-button button-orange" href="{% url 'list_campaigns' %}"><i class="fa fa-backward fa-lg"></i> Go back to campaigns list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+
+	{% include "SETA_gophish/footer.html" %}
+
+  </body>
+</html>

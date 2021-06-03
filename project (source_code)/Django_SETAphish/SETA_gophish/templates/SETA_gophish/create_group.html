@@ -1,0 +1,55 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>Group creation</h2>
+	
+	{% if form %}
+	
+		<p><i class="fa fa-info-circle fa-lg"></i> For creating a new target group of users: use CSV file (',' separated and no headers), containing per line:</p>
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-asterisk"></i> First Name</li> 
+		<li class="pure-menu-item"><i class="fa fa-asterisk"></i> Last Name</li>
+		<li class="pure-menu-item" ><i class="fa fa-asterisk"></i> Email</li>
+		<li class="pure-menu-item" ><i class="fa fa-asterisk"></i> Position</li>
+		</ul>
+		<br>
+		
+		
+		<form class="pure-form pure-form-stacked" action={% url 'create_group' %} method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<fieldset>
+		<label for="group_name">Group name</label>
+		<input id="group_name" type="text" name="group_name" value="">
+		<br>
+		<label for="your_file">Select your CSV file</label>
+		<input id="your_file" type="file" name="your_file" value="your_file">
+		<br>
+		<input class="pure-button pure-button-primary" type="submit" value="OK">
+		</fieldset>
+		</form>
+		
+	{% elif error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to create the target group</p>
+		<p>Reason for that: {{ error_msg }}</p>
+		<p><a class="pure-button button-orange" href="{% url 'create_group' %}"><i class="fa fa-backward fa-lg"></i> Go back to group creation</a></p>
+	
+	{% elif group_name %}
+	
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Group {{group_name}} created successfully!</p>
+		<p><a class="pure-button button-orange" href="{% url 'create_group' %}"><i class="fa fa-backward fa-lg"></i> Go back to group creation</a></p>
+	
+	{% endif %}
+	
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+
+	{% include "SETA_gophish/footer.html" %}
+
+  </body>
+</html>

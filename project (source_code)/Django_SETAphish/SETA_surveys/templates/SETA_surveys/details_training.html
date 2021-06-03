@@ -1,0 +1,101 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+  
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAsurvey</h1>
+	<h2>Training details</h2>	
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the training details</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+	
+	{% elif training %}
+
+		<h3>General information</h3>
+
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-dot-circle-o"></i> Training ID: {{ training.id }}</li> 
+		<li class="pure-menu-item"><i class="fa fa-tags"></i> Name: {{ training.training_name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-users"></i> Number of users: {{ training.number_of_users }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-asterisk"></i> Target object name: {{ training.target_group_name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-asterisk"></i> Target source: {{ training.source }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-asterisk"></i> Survey template name: {{ training.survey_template_name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-calendar-check-o"></i> Creation date: {{ training.date }}</li>
+		
+		{% if training.status == 'COMPLETED' %}
+			<li class="pure-menu-item"><i class="fa fa-check-circle"></i> Status: {{ training.status|upper }}</li>
+		{% elif training.status == 'ACTIVE' %}
+			<li class="pure-menu-item"><i class="fa fa-spinner"></i> Status: {{ training.status|upper }}</li>
+		{% endif %}
+		</ul>
+		
+		<h3>Survey user statistics</h3>
+		
+		{% if users %}
+		
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+			<tr>
+				<th>User ID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Position</th>
+				<th>Phishing status</th>
+				<th>Survey results</th>
+				<th>Score</th>
+			</tr>
+			</thead>
+		
+			<tbody>
+			{% for user in users %}
+				<tr>
+					<th>{{ user.id }}</th> 
+					<th>{{ user.first_name }}</th>
+					<th>{{ user.last_name }}</th>
+					<th>{{ user.email }}</th>
+					<th>{{ user.position }}</th>
+					<th>{{ user.phishing_status }}</th>
+					<th>{{ user.survey_results }}</th>
+					<th>{{ user.score }}</th>
+				</tr>
+			{% endfor %}	
+			</tbody>
+		</table>
+		
+		{% endif %}
+	
+		<h3>Downloads</h3>
+					
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+			<tr>
+				<th>User stats</th>
+			</tr>
+			</thead>
+		
+			<tbody>
+			<tr>
+				<th><a class="pure-button button-maroon" href="{% url 'SETA_surveys:download_training_stats' training.id %}"><i class="fa fa-cloud-download fa-lg"></i></a></th>
+			</tr>
+			</tbody>
+		</table>
+	
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No details found</p>
+	
+	{% endif %}
+
+	<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:list_trainings' %}"><i class="fa fa-backward fa-lg"></i> Go back to training list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'SETA_surveys:index2' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+	
+  </body>
+</html>

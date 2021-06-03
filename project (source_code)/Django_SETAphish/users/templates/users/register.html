@@ -1,0 +1,23 @@
+{% load static %}
+
+{% include "SETA_gophish/base.html" %}
+
+<div class="main">
+
+<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+<h2>Please, register yourself as new user</h2>
+
+<form method="POST">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Register</button>
+</form>
+
+<hr />
+
+<a href="{% url 'user_login' %}">Log in</a>
+</div>
+
+{% include "SETA_gophish/footer.html" %}
+
+</body>

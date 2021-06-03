@@ -1,0 +1,60 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	
+	<h2>Group list</h2>
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the target Groups list</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+		<p><a class="pure-button button-orange" href="{% url 'list_groups' %}"><i class="fa fa-backward fa-lg"></i> Go back to group list</a></p>
+	
+	{% elif groups %}
+
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Target groups retrieved successfully!</p>
+
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+			<tr>
+				<th>Group ID</th>
+				<th>Name</th>
+				<th>Number of target users</th>
+				<th>Details</th>
+				<th>Remove</th>
+				
+			</tr>
+			</thead>
+			<tbody>
+			{% for group in groups %}
+				<tr>
+					<th>{{ group.id }}</th> 
+					<th>{{ group.name }}</th>
+					<th>{{ group.targets|length }}</th>
+					<th><a class="pure-button button-green" href="{% url 'get_detail_group' group.id %}"><i class="fa fa-info-circle fa-lg"></i> +info</a></th>
+					<th><a class="pure-button button-maroon" href="{% url 'remove_group' group.id %}" 
+					onclick="return confirm('This action cannot be undone. Are you sure?')"><i class="fa fa-trash fa-lg"></i></a></th>
+				</tr>
+			{% endfor %}	
+			</tbody>
+		</table>
+		
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No target groups defined yet!</p>
+	
+	{% endif%}
+		
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>
+	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+		
+  </body>
+</html>

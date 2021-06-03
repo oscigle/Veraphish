@@ -1,0 +1,43 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+  
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>Landing page details</h2>	
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the landing page details</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+	
+	{% elif landing_page %}
+
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-id-card-o"></i> Template ID: {{ landing_page.id }}</li> 
+		<li class="pure-menu-item"><i class="fa fa-tags"></i> Name: {{ landing_page.name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-ticket"></i> Credentials capturing: {{ landing_page.capture_credentials }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-key"></i> Password capturing: {{ landing_page.capture_passwords }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-long-arrow-right"></i> Redirect URL: {{ landing_page.redirect_url }}</li>		
+		{% if landing_page.html != '' %}
+			<li class="pure-menu-item" ><i class="fa fa-sticky-note"></i> HTML: <br/><br/> {{ landing_page.html }} <br/><br/></li>
+		{% endif %}
+				
+		</ul>
+		
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No details found</p>
+	
+	{% endif %}
+
+	<p><a class="pure-button button-orange" href="{% url 'list_landing_pages' %}"><i class="fa fa-backward fa-lg"></i> Go back to landing page list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+	
+  </body>
+</html>

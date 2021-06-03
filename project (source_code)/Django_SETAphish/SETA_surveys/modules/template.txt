@@ -1,0 +1,8 @@
+Dear ${PERSON_NAME}, 
+
+Please conduct the phishing awareness survey in here:
+${SURVEY_LINK}
+
+Have a great day!
+
+The cybersecurity team.

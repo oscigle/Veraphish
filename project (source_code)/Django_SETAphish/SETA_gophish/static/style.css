@@ -1,0 +1,94 @@
+/* CSS for SETA_gophish and SETA_surveys apps */
+
+.button-green,
+        .button-maroon,
+        .button-orange,
+        .button-blue {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+.button-green {
+	background: rgb(28, 184, 65);
+	/* this is a green */
+}
+
+.button-maroon {
+	background: rgb(202, 60, 60);
+	/* this is a maroon */
+}
+
+.button-orange {
+	background: rgb(223, 117, 20);
+	/* this is an orange */
+}
+
+.button-blue {
+	background: rgb(66, 184, 221);
+	/* this is a light blue */
+}
+
+body {margin:0;}
+
+.navbar {
+  overflow: hidden;
+  background-color: rgb(223, 117, 20);
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+.l-box {
+        padding: 2em;
+    }
+
+.main {
+  padding: 16px;
+  margin-top: 30px;
+  /* min-height: 1000px; */
+}
+
+.footer {
+  /* position: fixed; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: left;
+  padding: 3px;
+  font-size: small;
+}
+
+.footer a {
+  color: rgb(223, 117, 20)
+}
+
+.warning {
+	color: red;
+}
+
+.success {
+	color: green;
+}
+
+.oblique { 
+	font-style: italic;
+}

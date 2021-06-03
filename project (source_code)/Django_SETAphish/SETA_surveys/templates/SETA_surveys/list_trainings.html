@@ -1,0 +1,81 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAsurveys</h1>
+	
+	<h2>Training list</h2>
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the Training list</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:list_trainings' %}"><i class="fa fa-backward fa-lg"></i> Go back to training list</a></p>
+	
+	{% elif training_set %}
+
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Training list retrieved successfully!</p>
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+			<tr>
+				<th>Training ID</th>
+				<th>Name</th>
+				<th>Status</th>
+				<th>Number of users</th>
+				<th>Creation date (GMT)</th>
+				<th>T-score</th>
+				<th>A-score</th>
+				<th>Details</th>
+				<th>Terminate</th>
+				<th>Remove</th>
+				
+			</tr>
+			</thead>
+			<tbody>
+			{% for item, score1, score2 in training_set %}
+				<tr>
+					<th>{{ item.id }}</th> 
+					<th>{{ item.training_name }}</th>
+					{% if item.status == 'COMPLETED' %}
+					<th class="button-blue">{{ item.status }}</th>
+					{% elif item.status == 'ACTIVE' %}
+					<th class="button-green">{{ item.status }}</th>
+					{% else %}
+					<th class="button-maroon">{{ item.status }}</th>
+					{% endif %}
+					<th>{{ item.number_of_users }}</th> 
+					<th>{{ item.date }}</th>
+					<th>{{ score1 }}</th>
+					<th>{{ score2 }}</th>
+					<th><a class="pure-button button-green" href="{% url 'SETA_surveys:get_detail_training' item.id %}"><i class="fa fa-info-circle fa-lg"></i> +info</a></th>
+					{% if item.status != 'COMPLETED' %}
+						<th><a class="pure-button button-blue" href="{% url 'SETA_surveys:end_training' item.id %}" onclick="return confirm('This action cannot be undone. Are you sure?')"><i class="fa fa-flag-checkered fa-lg"></i> </a></th>
+					{% else %}
+						<th></th>
+					{% endif %}
+					<th><a class="pure-button button-maroon" href="{% url 'SETA_surveys:remove_training' item.id %}" 
+					onclick="return confirm('This action cannot be undone. Make sure the survey is completed and results exported. Remove anyway?')"><i class="fa fa-trash fa-lg"></i></a></th>
+				</tr>
+			{% endfor %}	
+			</tbody>
+		</table>
+		
+		<p class="oblique"><i class="fa fa-info fa-lg"></i> T-score (training score): average survey grade obtained (0,100). Only shown if % respondents greater than value as per configuration</p>
+		<p class="oblique"><i class="fa fa-info fa-lg"></i> A-score (awareness score): value (-100,100) calculated as: % respondents who passed the survey (pass grade as per configuration) - % users phished. Only shown if % respondents greater than value as per configuration, and source of users was a Phishing Campaign.</p>
+	
+		
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No trainings defined yet!</p>
+	
+	{% endif%}
+		
+	<p><a class="pure-button button-blue" href="{% url 'SETA_surveys:index2' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+		
+  </body>
+</html>

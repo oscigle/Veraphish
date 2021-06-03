@@ -1,0 +1,25 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAsurvey</h1>
+	<h2>Awareness training menu creation</h2>
+	
+	
+	<p><i class="fa fa-info-circle fa-lg"></i> For creating a new training survey, please select one from the following options.</p>
+		
+	<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:create_group_training' %}"><i class="fa fa-users fa-lg"></i> Group training</a> Conduct a training survey over a customized predefined group of users</p> 	
+	<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:create_campaign_training' %}"><i class="fa fa-life-saver fa-lg"></i> Campaign training</a> Targeted to users from an already finished phishing campaign to measure awareness improvement</p>  
+	
+	<br>
+
+	<p><a class="pure-button button-blue" href="{% url 'SETA_surveys:index2' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+
+	{% include "SETA_gophish/footer.html" %}
+
+  </body>
+</html>

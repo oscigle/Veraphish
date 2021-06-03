@@ -1,0 +1,58 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>SMTP profiles list</h2>
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the SMTP profiles list</p>
+		<p>Reason for that: {{ error_msg }}</p>		
+		<p><a class="pure-button button-orange" href="{% url 'list_profiles' %}"><i class="fa fa-backward fa-lg"></i> Go back to profiles list</a></p>
+	
+	{% elif profiles %}
+
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> SMTP profile templates retrieved successfully!</p>
+
+		<table class="pure-table pure-table-horizontal">
+			<thead>
+			<tr>
+				<th>Profile ID</th>
+				<th>Name</th>
+				<th>Host</th>
+				<th>Details</th>
+				<th>Remove</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for profile in profiles %}
+				<tr>
+					<th>{{ profile.id }}</th> 
+					<th>{{ profile.name }}</th>
+					<th>{{ profile.host }}</th>
+					<th><a class="pure-button button-green" href="{% url 'get_detail_profile' profile.id %}"><i class="fa fa-info-circle fa-lg"></i> +info</a></th>
+					<th><a class="pure-button button-maroon" href="{% url 'remove_profile' profile.id %}" 
+					onclick="return confirm('This action cannot be undone. Are you sure?')"><i class="fa fa-trash fa-lg"></i></a></th>
+				</tr>
+			{% endfor %}	
+			</tbody>
+		</table>
+		
+	{% else %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No SMTP profiles defined yet!</p>
+	
+	{% endif%}
+		
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>
+	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+		
+  </body>
+</html>

@@ -1,0 +1,65 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAsurvey</h1>
+	<h2>Training campaign creation</h2>
+	
+	{% if form %}
+	
+		{% if form.errors %}
+		{% for field in form %}
+			{% for error in field.errors %}
+				<div class="alert alert-danger">
+					<strong>{{ error|escape }}</strong>
+				</div>
+			{% endfor %}
+		{% endfor %}
+		{% for error in form.non_field_errors %}
+			<div class="alert alert-danger">
+				<strong>{{ error|escape }}</strong>
+			</div>
+		{% endfor %}
+
+		{% else %}
+		
+		
+		<p><i class="fa fa-info-circle fa-lg"></i> For creating a new Training based on a target group, use the form.</p>
+		
+		<br>
+		
+		<form class="pure-form pure-form-stacked" action={% url 'SETA_surveys:create_group_training' %} method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<fieldset>
+		{{form}}
+		<p class="warning"><i class="fa fa-exclamation fa-lg"></i> Should not exist any target group or survey template, must be created before launching a training campaign!</p>
+		
+		<input class="pure-button pure-button-primary" type="submit" value="OK">
+		</fieldset>
+		</form>
+	
+		{% endif %}
+	
+	{% elif error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to create the Training campaign</p>
+		<p>Reason for that: {{ error_msg }}</p>
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:create_training' %}"><i class="fa fa-backward fa-lg"></i> Go back to training creation</a></p>
+	
+	{% elif training %}
+	
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Training campaign {{training.training_name}} for {{ training.number_of_users }} users created successfully!</p>
+		<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:create_training' %}"><i class="fa fa-backward fa-lg"></i> Go back to training creation</a></p>
+	
+	{% endif %}
+	
+	<p><a class="pure-button button-blue" href="{% url 'SETA_surveys:index2' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+
+	{% include "SETA_gophish/footer.html" %}
+
+  </body>
+</html>

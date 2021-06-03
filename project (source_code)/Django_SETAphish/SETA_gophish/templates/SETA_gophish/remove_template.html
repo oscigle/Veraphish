@@ -1,0 +1,29 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">
+
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>Template removal</h2>
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to remove the template</p>
+		<p>Reason for that: {{ error_msg }}</p>
+		
+	{% elif template %}
+	
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Template {{template}} removed successfully!</p>
+	
+	{% endif %}
+	
+	<p><a class="pure-button button-orange" href="{% url 'list_templates' %}"><i class="fa fa-backward fa-lg"></i> Go back to templates list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+
+	{% include "SETA_gophish/footer.html" %}
+
+  </body>
+</html>

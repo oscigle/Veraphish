@@ -1,0 +1,73 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+	
+	<h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAphish</h1>
+	<h2>Email template creation</h2>
+	
+	{% if form %}
+	
+		<p><i class="fa fa-info-circle fa-lg"></i> For creating a new template build first an HTML file. You can use tags as per Gophish documentation</p>
+		<br>
+		
+	
+		{% if form.errors %}
+		{% for field in form %}
+			{% for error in field.errors %}
+				<div class="alert alert-danger">
+					<strong>{{ error|escape }}</strong>
+				</div>
+			{% endfor %}
+		{% endfor %}
+		{% for error in form.non_field_errors %}
+			<div class="alert alert-danger">
+				<strong>{{ error|escape }}</strong>
+			</div>
+		{% endfor %}
+
+		{% else %}
+		
+
+	
+		<form class="pure-form pure-form-stacked" action={% url 'create_template' %} method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<fieldset>
+		<label for="template_name">Template name</label>
+		<input id="template_name" type="text" name="template_name" value="">
+		<br>
+		<label for="email_subject">Email subject</label>
+		<input id="email_subject" type="text" name="email_subject" value="">
+		<br>
+		
+		<label for="your_file">Select your HTML file</label>
+		<input id="your_file" type="file" name="your_file" value="your_file">
+		<br>
+		<input class="pure-button pure-button-primary" type="submit" value="OK">
+		</fieldset>
+		</form>
+		
+		{% endif %}
+		
+	{% elif error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to create the email template</p>
+		<p>Reason for that: {{ error_msg }}</p>
+		<p><a href="{% url 'create_template' %}">Go back to email template creation</a></p>
+	
+	{% elif template %}
+	
+		<p class="success"><i class="fa fa-check-circle fa-lg"></i> Template {{template_name}} created successfully!</p>
+		<p><a class="pure-button button-orange" href="{% url 'create_template' %}"><i class="fa fa-backward fa-lg"></i> Go back to email template creation</a></p>
+	
+	{% endif %}
+	
+	<p><a class="pure-button button-blue" href="{% url 'index' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+
+	{% include "SETA_gophish/footer.html" %}
+
+  </body>
+</html>

@@ -1,0 +1,53 @@
+{% load static %}
+
+	{% include "SETA_gophish/base.html" %}
+
+	<div class="main">	
+  
+    <h1><img src="{% static "logo.png" %}" alt="SETAphish">Welcome to SETAsurvey</h1>
+	
+	<h2>Survey template details</h2>
+	
+	{% if error_msg %}
+	
+		<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> KO! We were unable to retrieve the Survey details</p>
+		<p>Reason for that: {{ error_msg }}</p>
+		
+	{% elif survey %}
+
+		<ul class="pure-menu-list">
+		<li class="pure-menu-item"><i class="fa fa-id-card-o"></i> Survey ID: {{ survey.id }}</li> 
+		<li class="pure-menu-item"><i class="fa fa-tags"></i> Name: {{ survey.survey_name }}</li>
+		<li class="pure-menu-item" ><i class="fa fa-calendar"></i> Template creation date: {{ survey.date }}</li>
+		</ul>
+		<br>
+		
+		<h2>Content</h2>
+		{% for question in questions %}
+            <h3 class="oblique">{{question.text}}</h3>
+            {% for answer in answers %}
+                {% if answer.question.id == question.id %}
+					{% if answer.valid %}
+					<p><i class="fa fa-check-square"></i> {{answer.text}}</p>
+					{% else %}
+					<p><i class="fa fa-times"></i> {{answer.text}}</p>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+		
+	{% else %}
+	
+	<p class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> No details found</p>
+	
+	{% endif%}
+
+	<p><a class="pure-button button-orange" href="{% url 'SETA_surveys:list_surveys' %}"><i class="fa fa-backward fa-lg"></i> Go back to survey list</a></p>
+	<p><a class="pure-button button-blue" href="{% url 'SETA_surveys:index2' %}"><i class="fa fa-undo fa-lg"></i> Go back to main page</a></p>	
+	
+	</div>
+	
+	{% include "SETA_gophish/footer.html" %}
+	
+  </body>
+</html>
